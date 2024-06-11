@@ -4,6 +4,7 @@ import RNPickerSelect from 'react-native-picker-select';
 import { BottomSheet } from '@rneui/themed';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { RootStackParamList } from '../App';
+import Modal from 'react-native-modal';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
 const categories = [
@@ -69,8 +70,12 @@ export default function AddExpenseIncome() {
         keyExtractor={(item) => item.key}
       />
 
-      <BottomSheet isVisible={isCategoryPickerVisible}>
-        <View style={styles.bottomSheet}>
+<Modal
+        isVisible={isCategoryPickerVisible}
+        onBackdropPress={() => setCategoryPickerVisible(false)}
+        style={styles.bottomSheet}
+      >
+        <View style={styles.modalContent}>
           <Text style={styles.chooseCategoryText}>CHOOSE CATEGORY</Text>
           <FlatList
             data={categories}
@@ -96,7 +101,9 @@ export default function AddExpenseIncome() {
             <Text style={styles.closeButtonText}>Cancel</Text>
           </TouchableOpacity>
         </View>
-      </BottomSheet>
+      </Modal>
+
+      
     </View>
   );
 }
@@ -105,6 +112,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    padding: 20
   },
   input: {
     borderWidth: 1,
@@ -128,11 +136,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   bottomSheet: {
+    justifyContent: 'flex-end',
+    margin: 0,
+  },
+  modalContent: {
     backgroundColor: '#fff',
     padding: 20,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    // height: '80%',
+    height: '50%'
   },
   icon: {
     padding: 10,
@@ -179,7 +191,7 @@ const pickerSelectStyles = StyleSheet.create({
     fontSize: 16,
     paddingHorizontal: 10,
     paddingVertical: 8,
-    borderWidth: 0.5,
+    borderWidth: 2,
     borderColor: '#ccc',
     borderRadius: 8,
     color: 'black',
